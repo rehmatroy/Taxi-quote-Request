@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taxi Quote Request</title>
+</head>
+<body>
+    <h1>Taxi Quote Request</h1>
+    <form id="quoteForm">
+        <label for="pickup">Pickup Address:</label>
+        <input type="text" id="pickup" required><br><br>
+        
+        <label for="destination">Destination Address:</label>
+        <input type="text" id="destination" required><br><br>
+        
+        <label for="vehicleType">Vehicle Type:</label>
+        <select id="vehicleType" required>
+            <option value="standard">Standard</option>
+            <option value="premium">Premium</option>
+        </select><br><br>
+
+        <button type="submit">Get Quote</button>
+    </form>
+
+    <div id="quoteResult"></div>
+
+    <script>
+        document.getElementById('quoteForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const pickupAddress = document.getElementById('pickup').value;
+            const destinationAddress = document.getElementById('destination').value;
+            const vehicleType = document.getElementById('vehicleType').value;
+
+            // Mock API call to retrieve quote
+            const quote = getTaxiQuote(pickupAddress, destinationAddress, vehicleType);
+            displayQuote(quote);
+        });
+
+        function getTaxiQuote(pickupAddress, destinationAddress, vehicleType) {
+            // Mock API response, replace this with actual API call
+            // In real application, you would call taxi service API to get the quote
+            const baseFare = vehicleType === 'standard' ? 10 : 15;
+            const distance = calculateDistance(pickupAddress, destinationAddress);
+            const quote = baseFare + distance * 2; // Assuming $2 per mile
+            return quote;
+        }
+
+        function calculateDistance(pickupAddress, destinationAddress) {
+            // Mock calculation of distance, replace this with Google Maps Distance Matrix API
+            // In real application, you would call Google Maps API to get accurate distance
+            return Math.abs(pickupAddress.length - destinationAddress.length); // Dummy calculation
+        }
+
+        function displayQuote(quote) {
+            const quoteResultDiv = document.getElementById('quoteResult');
+            quoteResultDiv.innerHTML = `<p>Estimated Quote: $${quote}</p>`;
+        }
+    </script>
+</body>
+</html>
